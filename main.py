@@ -1,40 +1,29 @@
-from app.tools.tavily_search import search_web
-from app.tools.web_scraper import scrape_webpage
+from app.services.research_pipeline import research_pipeline
 
 
 def main():
 
-    query = "latest developments in artificial intelligence"
+    topic = input("Enter your research topic: ")
 
-    # Step 1: Search using Tavily
-    results = search_web(
-        query=query,
+    documents = research_pipeline(
+        query=topic,
         max_results=3
     )
 
-    for index, result in enumerate(results, start=1):
+    print("\n" + "=" * 70)
+    print("RESEARCH RESULTS")
+    print("=" * 70)
 
-        print("\n" + "=" * 60)
+    for index, document in enumerate(documents, start=1):
 
-        print(f"RESULT {index}")
+        print(f"\nSOURCE {index}")
+        print(f"TITLE: {document['title']}")
+        print(f"URL: {document['url']}")
 
-        print("=" * 60)
+        print("\nCONTENT:")
+        print(document["content"][:1500])
 
-        print("\nTITLE:")
-        print(result["title"])
-
-        print("\nURL:")
-        print(result["url"])
-
-        # Step 2: Scrape the URL
-        print("\nSCRAPING WEBSITE...\n")
-
-        content = scrape_webpage(
-            result["url"]
-        )
-
-        # Print first 2000 characters
-        print(content[:2000])
+        print("\n" + "-" * 70)
 
 
 if __name__ == "__main__":
