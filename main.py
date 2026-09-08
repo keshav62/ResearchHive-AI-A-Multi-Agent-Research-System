@@ -1,29 +1,34 @@
-from app.services.research_pipeline import research_pipeline
+from app.agents.scout import create_scout_agent
 
 
 def main():
 
+    scout_agent = create_scout_agent()
+
     topic = input("Enter your research topic: ")
 
-    documents = research_pipeline(
-        query=topic,
-        max_results=3
+    response = scout_agent.invoke(
+        {
+            "messages": [
+                {
+                    "role": "user",
+                    "content": topic
+                }
+            ]
+        }
     )
 
-    print("\n" + "=" * 70)
-    print("RESEARCH RESULTS")
-    print("=" * 70)
+    print("\n" + "=" * 60)
+    print("SCOUT AGENT SEARCH QUERIES")
+    print("=" * 60 + "\n")
 
-    for index, document in enumerate(documents, start=1):
+    scout_result = response["structured_response"]
 
-        print(f"\nSOURCE {index}")
-        print(f"TITLE: {document['title']}")
-        print(f"URL: {document['url']}")
-
-        print("\nCONTENT:")
-        print(document["content"][:1500])
-
-        print("\n" + "-" * 70)
+    for index, query in enumerate(
+        scout_result.search_queries,
+        start=1
+    ):
+        print(f"{index}. {query}")
 
 
 if __name__ == "__main__":
