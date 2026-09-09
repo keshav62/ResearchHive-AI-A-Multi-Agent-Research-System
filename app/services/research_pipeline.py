@@ -2,32 +2,44 @@ from app.tools.tavily_search import search_web
 from app.tools.web_scraper import scrape_webpage
 
 
-def research_pipeline(query: str, max_results: int = 5):
+def collect_research_documents(
+    topic: str,
+    max_results: int = 5
+):
     """
-    Search the web using Tavily and scrape the returned URLs.
+    1. Search topic using Tavily.
+    2. Get URLs from Tavily.
+    3. Scrape each URL.
+    4. Return collected documents.
     """
 
+    print("\n🔎 Searching with Tavily...\n")
+
     search_results = search_web(
-        query=query,
+        query=topic,
         max_results=max_results
     )
 
-    research_documents = []
+    documents = []
 
-    for result in search_results:
+    for index, result in enumerate(search_results, start=1):
 
-        title = result.get("title", "")
+        title = result.get("title", "Unknown Title")
         url = result.get("url", "")
 
-        print(f"\nScraping: {title}")
+        if not url:
+            continue
+
+        print(f"[{index}] Scraping: {title}")
 
         content = scrape_webpage(url)
 
-        # Skip pages that failed
-        if content.startswith("Error scraping"):
+        # Skip failed scraping
+        if content.startswith("ERROR:"):
+            print("❌ Failed to scrape")
             continue
 
-        research_documents.append(
+        documents.append(
             {
                 "title": title,
                 "url": url,
@@ -35,4 +47,4 @@ def research_pipeline(query: str, max_results: int = 5):
             }
         )
 
-    return research_documents
+    return documents
