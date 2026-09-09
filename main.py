@@ -1,29 +1,53 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.schemas.research_schema import ResearchRequest
 from app.orchestrator.workflow import run_research_workflow
 
 
-def main():
+app = FastAPI(
+    title="ResearchHive AI API",
+    description="Multi-Agent Research System API",
+    version="1.0.0"
+)
 
-    print("=" * 60)
-    print("🐝 RESEARCHHIVE AI")
-    print("Multi-Agent Research System")
-    print("=" * 60)
-
-    while True:
-
-        topic = input("\nEnter your research topic: ")
-
-        if topic.lower() == "exit":
-            print("\nGoodbye! 👋")
-            break
-
-        result = run_research_workflow(topic)
-
-        print("\n" + "=" * 70)
-        print("📚 FINAL RESEARCH REPORT")
-        print("=" * 70 + "\n")
-
-        print(result["final_report"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-if __name__ == "__main__":
-    main()
+@app.get("/")
+def home():
+    return {
+        "message": "ResearchHive AI API is running 🐝"
+    }
+
+
+@app.post("/research")
+def research(request: ResearchRequest):
+
+    topic = request.topic
+
+    result = run_research_workflow(topic)
+
+    return {
+        "topic": result["topic"],
+        "search_queries": result["search_queries"],
+        "research": result["research"],
+        "critic_feedback": {
+            "overall_score": result["critic_feedback"].overall_score,
+            "strengths": result["critic_feedback"].strengths,
+            "weaknesses": result["critic_feedback"].weaknesses,
+            "missing_information": result["critic_feedback"].missing_information,
+            "unsupported_claims": result["critic_feedback"].unsupported_claims,
+            "contradictions": result["critic_feedback"].contradictions,
+            "recommendations": result["critic_feedback"].recommendations,
+        },
+        "final_report": result["final_report"]
+    }
