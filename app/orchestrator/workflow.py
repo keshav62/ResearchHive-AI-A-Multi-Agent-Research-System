@@ -52,7 +52,7 @@ def run_research_workflow(topic: str):
 
         documents = collect_research_documents(
             topic=query,
-            max_results=3
+            max_results=2
         )
 
         all_documents.extend(documents)
@@ -79,23 +79,40 @@ def run_research_workflow(topic: str):
     # STEP 4: PREPARE DOCUMENTS FOR RESEARCHER
     # ==========================================
 
+    print("\nPreparing documents for Researcher Agent...")
+
+    MAX_DOCUMENTS = 8
+    MAX_CHARS_PER_DOCUMENT = 2500
+
     research_content = ""
 
-    for index, document in enumerate(unique_documents, start=1):
+    documents_for_research = unique_documents[:MAX_DOCUMENTS]
+
+    for index, document in enumerate(documents_for_research, start=1):
+
+        content = document.get("content", "")
+
+        # Limit the content size
+        content = content[:MAX_CHARS_PER_DOCUMENT]
 
         research_content += f"""
 
-SOURCE {index}
+    SOURCE {index}
 
-TITLE: {document.get("title", "Unknown")}
+    TITLE: {document.get("title", "Unknown")}
 
-URL: {document.get("url", "")}
+    URL: {document.get("url", "")}
 
-CONTENT:
-{document.get("content", "")[:6000]}
+    CONTENT:
+    {content}
 
-{'-' * 60}
-"""
+    {'-' * 60}
+    """
+
+    print(
+        f"\n📄 Sending {len(documents_for_research)} "
+        f"documents to the Researcher Agent."
+    )
 
     # ==========================================
     # STEP 5: RESEARCHER AGENT

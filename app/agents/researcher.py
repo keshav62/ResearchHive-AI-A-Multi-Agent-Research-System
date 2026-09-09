@@ -15,3 +15,33 @@ def create_researcher_agent():
     )
 
     return researcher_agent
+
+
+def run_researcher(topic: str, research_content: str):
+
+    researcher_agent = create_researcher_agent()
+
+    response = researcher_agent.invoke(
+        {
+            "messages": [
+                {
+                    "role": "user",
+                    "content": f"""
+Research Topic:
+{topic}
+
+Collected Research Documents:
+
+{research_content}
+
+Perform deep research using the collected documents.
+
+Analyze the information carefully and provide a detailed,
+well-structured research report.
+"""
+                }
+            ]
+        }
+    )
+
+    return response["messages"][-1].content
