@@ -8,15 +8,21 @@ def main():
     print("Multi-Agent Research System")
     print("=" * 60)
 
-    topic = input("\nEnter your research topic: ")
+    while True:
 
-    result = run_research_workflow(topic)
+        topic = input("\nEnter your research topic: ")
 
-    print("\n" + "=" * 70)
-    print("📚 FINAL DEEP RESEARCH REPORT")
-    print("=" * 70 + "\n")
+        if topic.lower() == "exit":
+            print("\nGoodbye! 👋")
+            break
 
-    print(result["research"])
+        result = run_research_workflow(topic)
+
+        print("\n" + "=" * 70)
+        print("📚 FINAL RESEARCH REPORT")
+        print("=" * 70 + "\n")
+
+        print(result["final_report"])
 
 
 if __name__ == "__main__":

@@ -1,6 +1,8 @@
 from app.agents.scout import create_scout_agent
 from app.agents.researcher import create_researcher_agent
 from app.services.research_pipeline import collect_research_documents
+from app.agents.critic import run_critic
+from app.agents.writer import run_writer
 
 
 def run_research_workflow(topic: str):
@@ -149,9 +151,60 @@ well-structured research report.
 
     final_research = researcher_response["messages"][-1].content
 
+    # ==========================================
+    # STEP 6: CRITIC AGENT
+    # ==========================================
+
+    print("\n" + "=" * 60)
+    print("🕵️ CRITIC AGENT")
+    print("=" * 60)
+
+    critic_result = run_critic(
+        topic=topic,
+        research_report=final_research
+    )
+
+    print(f"\n⭐ Overall Score: {critic_result.overall_score}/10")
+
+    print("\n✅ Strengths:")
+    for item in critic_result.strengths:
+        print(f"- {item}")
+
+    print("\n❌ Weaknesses:")
+    for item in critic_result.weaknesses:
+        print(f"- {item}")
+
+    print("\n🔍 Missing Information:")
+    for item in critic_result.missing_information:
+        print(f"- {item}")
+
+    print("\n⚠️ Unsupported Claims:")
+    for item in critic_result.unsupported_claims:
+        print(f"- {item}")
+
+    print("\n💡 Recommendations:")
+    for item in critic_result.recommendations:
+        print(f"- {item}")
+
+    # ==========================================
+    # STEP 7: WRITER AGENT
+    # ==========================================
+
+    print("\n" + "=" * 60)
+    print("✍️ WRITER AGENT")
+    print("=" * 60)
+
+    final_report = run_writer(
+        topic=topic,
+        research_report=final_research,
+        critic_feedback=critic_result
+    )
+
     return {
-        "topic": topic,
-        "search_queries": search_queries,
-        "documents": unique_documents,
-        "research": final_research
+    "topic": topic,
+    "search_queries": search_queries,
+    "documents": unique_documents,
+    "research": final_research,
+    "critic_feedback": critic_result,
+    "final_report": final_report
     }
