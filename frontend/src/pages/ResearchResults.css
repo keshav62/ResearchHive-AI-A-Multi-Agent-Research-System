@@ -1,0 +1,204 @@
+.research-results {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-base);
+}
+
+.research-results__main {
+  flex: 1;
+  padding: 32px 48px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Topic header */
+.research-results__topic-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.research-results__topic-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.research-results__topic-title {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.research-results__topic-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+/* Tabs */
+.research-results__tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.research-results__tabs::-webkit-scrollbar { display: none; }
+
+.research-results__tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.research-results__tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.research-results__tab--active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Content */
+.research-results__content { flex: 1; }
+
+/* Tab panels */
+.research-results__tab-panel {
+  animation: fadeIn 0.25s ease both;
+}
+
+.research-results__report-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* Overview */
+.research-results__overview {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.25s ease both;
+}
+
+.research-results__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* Queries card */
+.research-results__queries {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.research-results__queries-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.research-results__queries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.research-results__query-chip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.research-results__query-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: var(--accent-subtle);
+  color: var(--accent);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* No result */
+.research-results__no-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+  padding: 80px 32px;
+  max-width: 420px;
+  margin: 60px auto;
+}
+
+.research-results__no-result span { font-size: 48px; }
+
+.research-results__no-result h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.research-results__no-result p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .research-results__stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .research-results__main { padding: 24px 24px 60px; }
+}
+
+@media (max-width: 640px) {
+  .research-results__main { padding: 20px 16px 48px; }
+  .research-results__topic-title { font-size: 1.25rem; }
+  .research-results__stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .research-results__tab { padding: 7px 12px; font-size: 0.8125rem; }
+}

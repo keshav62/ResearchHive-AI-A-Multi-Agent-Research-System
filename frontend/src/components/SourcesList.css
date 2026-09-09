@@ -1,0 +1,113 @@
+.sources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sources-list__count {
+  display: flex;
+  align-items: center;
+}
+
+.sources-list__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* Card */
+.sources-list__card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  cursor: default;
+}
+
+.sources-list__card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sources-list__favicon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.sources-list__domain {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sources-list__link-btn {
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.sources-list__card:hover .sources-list__link-btn {
+  opacity: 1;
+}
+
+.sources-list__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sources-list__desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sources-list__url {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+/* Empty */
+.sources-list__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 12px;
+  color: var(--text-muted);
+}
+
+.sources-list__empty span { font-size: 40px; }
+.sources-list__empty p   { font-size: 0.9375rem; }
+
+@media (max-width: 768px) {
+  .sources-list__grid { grid-template-columns: 1fr; }
+  .sources-list__link-btn { opacity: 1; }
+}

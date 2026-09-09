@@ -1,0 +1,89 @@
+.agent-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+  animation: fadeInUp 0.5s ease both;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.agent-card:hover {
+  border-color: var(--border-default);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.agent-card--active {
+  border-color: rgba(245,158,11,0.4);
+  background: var(--bg-card);
+  box-shadow: 0 0 0 2px var(--accent-subtle), var(--shadow-md);
+  animation: fadeInUp 0.5s ease both, glow 2s ease-in-out infinite;
+}
+
+.agent-card--completed {
+  border-color: rgba(34,197,94,0.3);
+}
+
+.agent-card--completed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(34,197,94,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Emoji */
+.agent-card__emoji-wrapper {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.agent-card__emoji {
+  font-size: 24px;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* Pulse ring for active */
+.agent-card__pulse-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 18px;
+  border: 2px solid var(--accent);
+  animation: pulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.agent-card__name {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.agent-card__desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.agent-card__badge {
+  margin-top: 4px;
+}
